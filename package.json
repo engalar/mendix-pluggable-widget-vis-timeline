@@ -7,7 +7,8 @@
   "author": "wengao.liu@siemens.com",
   "dependencies": {
     "ahooks": "^3.3.10",
-    "classnames": "^2.2.6"
+    "classnames": "^2.2.6",
+    "vis-timeline": "^7.5.1"
   },
   "scripts": {
     "testProject": "git clone https://gitee.com/engalar/mendix-testproject-960.git --depth=1 ./tests/testProject && shx rm -rf .\\tests\\testProject\\.git",
