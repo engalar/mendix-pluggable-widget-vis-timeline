@@ -1,32 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<widget id="mendixcn.vistimeline.VisTimeline" pluginWidget="true" needsEntityContext="true" offlineCapable="true" supportedPlatform="Web" xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
+<widget id="mendixcn.vistimeline.VisTimeline" pluginWidget="true" needsEntityContext="true" offlineCapable="true" supportedPlatform="Web"
+    xmlns="http://www.mendix.com/widget/1.0/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
     <name>VisTimeline</name>
     <description>My widget description</description>
     <icon/>
     <properties>
-        <propertyGroup caption="General">
-            <property key="sampleText" type="string" required="false">
-                <caption>Default value</caption>
-                <description>Sample text input</description>
-            </property>
-            <property key="attribute" type="attribute" required="false">
-                <caption>Attribute</caption>
-                <description/>
-                <attributeTypes>
-                    <attributeType name="String"/>
-                </attributeTypes>
-            </property>
-            <property key="datasource" type="datasource" required="true" isList="true">
-                <caption>Data Source</caption>
-                <description/>
-            </property>
-            <property key="att2" type="attribute" required="false" dataSource="datasource">
-                <caption>att2</caption>
-                <description/>
-                <attributeTypes>
-                    <attributeType name="String"/>
-                </attributeTypes>
-            </property>
+        <propertyGroup caption="通用">
+            <propertyGroup caption="时间线">
+                <property key="attStart" type="attribute" required="false" onChange="actLoad">
+                    <caption>开始</caption>
+                    <description></description>
+                    <attributeTypes>
+                        <attributeType name="DateTime" />
+                    </attributeTypes>
+                </property>
+                <property key="attEnd" type="attribute" required="false" onChange="actLoad">
+                    <caption>结束</caption>
+                    <description></description>
+                    <attributeTypes>
+                        <attributeType name="DateTime" />
+                    </attributeTypes>
+                </property>
+                <property key="actLoad" type="action">
+                    <caption>数据加载</caption>
+                    <description></description>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="分组">
+                <property key="entityGroup" type="datasource" required="true" isList="true">
+                    <caption>分组</caption>
+                    <description></description>
+                </property>
+                <property key="attName" type="attribute" required="true" dataSource="entityGroup">
+                    <caption>名称</caption>
+                    <description></description>
+                    <attributeTypes>
+                        <attributeType name="String" />
+                    </attributeTypes>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="事件任务">
+                <property key="entityEvent" type="datasource" required="true" isList="true">
+                    <caption>事件任务</caption>
+                    <description></description>
+                </property>
+                <property key="attTitle" type="attribute" required="true" dataSource="entityEvent">
+                    <caption>标题</caption>
+                    <description></description>
+                    <attributeTypes>
+                        <attributeType name="String" />
+                    </attributeTypes>
+                </property>
+                <property key="attGroup" type="attribute" required="true" dataSource="entityEvent">
+                    <caption>分组名称</caption>
+                    <description></description>
+                    <attributeTypes>
+                        <attributeType name="String" />
+                    </attributeTypes>
+                </property>
+            </propertyGroup>
+        </propertyGroup>
+        <propertyGroup caption="事件">
+            <propertyGroup caption="事件任务">
+                <property key="actTaskChange" type="action" dataSource="entityEvent">
+                    <caption>编辑</caption>
+                    <description></description>
+                </property>
+            </propertyGroup>
         </propertyGroup>
     </properties>
 </widget>

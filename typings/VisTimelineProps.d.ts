@@ -1,29 +1,38 @@
 /**
- * This file was generated from Graph.xml
+ * This file was generated from VisTimeline.xml
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix UI Content Team
  */
 import { CSSProperties } from "react";
-import { EditableValue, ListValue, ListAttributeValue } from "mendix";
+import { EditableValue, ListValue, ListActionValue, ListAttributeValue } from "mendix";
 
-export interface GraphContainerProps {
+export interface VisTimelineContainerProps {
     name: string;
     class: string;
     style?: CSSProperties;
     tabIndex?: number;
-    sampleText: string;
-    attribute?: EditableValue<string>;
-    datasource: ListValue;
-    att2?: ListAttributeValue<string>;
+    attStart?: EditableValue<Date>;
+    attEnd?: EditableValue<Date>;
+    entityGroup: ListValue;
+    attName: ListAttributeValue<string>;
+    entityEvent: ListValue;
+    attTitle: ListAttributeValue<string>;
+    attGroup: ListAttributeValue<string>;
+    actTaskChange?: ListActionValue;
 }
 
-export interface GraphPreviewProps {
+export interface VisTimelinePreviewProps {
     className: string;
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
-    sampleText: string;
-    attribute: string;
-    datasource: {} | { type: string } | null;
-    att2: string;
+    attStart: string;
+    attEnd: string;
+    actLoad: {} | null;
+    entityGroup: {} | { type: string } | null;
+    attName: string;
+    entityEvent: {} | { type: string } | null;
+    attTitle: string;
+    attGroup: string;
+    actTaskChange: {} | null;
 }
