@@ -18,6 +18,8 @@ export default function (props: VisTimelineContainerProps) {
 
                 // Workaround
                 // mx.data.getCachedObject(obj.id)
+                props.attTmpStart?.setValue(item.start as Date);
+                props.attTmpEnd?.setValue(item.end as Date);
             }
             const action = props.actTaskChange.get(obj);
             action.execute();

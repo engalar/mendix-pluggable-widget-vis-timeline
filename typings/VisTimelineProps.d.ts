@@ -20,6 +20,8 @@ export interface VisTimelineContainerProps {
     attGroup: ListAttributeValue<string>;
     attStartOfEvent: ListAttributeValue<Date>;
     attEndOfEvent: ListAttributeValue<Date>;
+    attTmpStart?: EditableValue<Date>;
+    attTmpEnd?: EditableValue<Date>;
     actTaskChange?: ListActionValue;
 }
 
@@ -38,5 +40,7 @@ export interface VisTimelinePreviewProps {
     attGroup: string;
     attStartOfEvent: string;
     attEndOfEvent: string;
+    attTmpStart: string;
+    attTmpEnd: string;
     actTaskChange: {} | null;
 }

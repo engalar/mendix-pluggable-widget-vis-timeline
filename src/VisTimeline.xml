@@ -77,6 +77,20 @@
         </propertyGroup>
         <propertyGroup caption="事件">
             <propertyGroup caption="事件任务">
+                <property key="attTmpStart" type="attribute" required="false">
+                    <caption>开始</caption>
+                    <description></description>
+                    <attributeTypes>
+                        <attributeType name="DateTime" />
+                    </attributeTypes>
+                </property>
+                <property key="attTmpEnd" type="attribute" required="false">
+                    <caption>结束</caption>
+                    <description></description>
+                    <attributeTypes>
+                        <attributeType name="DateTime" />
+                    </attributeTypes>
+                </property>
                 <property key="actTaskChange" type="action" dataSource="entityEvent">
                     <caption>编辑</caption>
                     <description></description>
