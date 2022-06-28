@@ -2,12 +2,27 @@ import { VisTimelineContainerProps } from "../typings/VisTimelineProps";
 import { ValueStatus } from "mendix";
 import { Timeline, DataSet, TimelineOptions, DataItem } from 'vis-timeline/standalone';
 import { useEffect, useRef } from "react";
-import { useMount } from "ahooks";
+import { useMemoizedFn, useMount } from "ahooks";
 
 export default function (props: VisTimelineContainerProps) {
-    console.log(props);
     const ref = useRef<any>();
     const timeLineRef = useRef<Timeline>();
+
+    const onItemChange = useMemoizedFn((item: DataItem) => {
+        if (item.id && props.actTaskChange && props.entityEvent && props.entityEvent.items) {
+            const obj = props.entityEvent.items[item.id as number];
+            if (obj) {
+                // This operation is not yet supported on attributes linked to a datasource
+                // props.attStartOfEvent.get(obj).setValue(item.start as Date);
+                // props.attEndOfEvent.get(obj).setValue(item.end as Date);
+
+                // Workaround
+                // mx.data.getCachedObject(obj.id)
+            }
+            const action = props.actTaskChange.get(obj);
+            action.execute();
+        }
+    });
 
     useEffect(() => {
         if (props.entityGroup.status === ValueStatus.Available) {
@@ -27,8 +42,8 @@ export default function (props: VisTimelineContainerProps) {
 
     useEffect(() => {
         if (props.entityEvent.status === ValueStatus.Available) {
-            const items: DataItem[] = props.entityEvent.items!.map(d => ({
-                id: d.id.toString(),
+            const items: DataItem[] = props.entityEvent.items!.map((d, i) => ({
+                id: i,
                 group: props.attGroup.get(d).value!,
                 content:
                     props.attTitle.get(d).value!,
@@ -38,7 +53,11 @@ export default function (props: VisTimelineContainerProps) {
             }));
 
             if (timeLineRef.current) {
-                timeLineRef.current.setItems(new DataSet(items));
+                const itemDataSet: DataSet = new DataSet(items);
+                itemDataSet.on("update", (_: any, { data: [item] }: any) => {
+                    onItemChange(item);
+                })
+                timeLineRef.current.setItems(itemDataSet);
             }
         }
 
