@@ -86,7 +86,7 @@ export default function (props: VisTimelineContainerProps) {
                 updateTime: true,
                 overrideItems: true
             },
-            onUpdate(item, cb) {
+            onUpdate(item, _cb) {
                 console.log(item, "onUpdate");
                 // cb(item);
             }
