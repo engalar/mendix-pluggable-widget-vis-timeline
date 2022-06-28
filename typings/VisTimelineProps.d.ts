@@ -18,6 +18,8 @@ export interface VisTimelineContainerProps {
     entityEvent: ListValue;
     attTitle: ListAttributeValue<string>;
     attGroup: ListAttributeValue<string>;
+    attStartOfEvent: ListAttributeValue<Date>;
+    attEndOfEvent: ListAttributeValue<Date>;
     actTaskChange?: ListActionValue;
 }
 
@@ -34,5 +36,7 @@ export interface VisTimelinePreviewProps {
     entityEvent: {} | { type: string } | null;
     attTitle: string;
     attGroup: string;
+    attStartOfEvent: string;
+    attEndOfEvent: string;
     actTaskChange: {} | null;
 }

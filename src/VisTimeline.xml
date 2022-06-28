@@ -59,6 +59,20 @@
                         <attributeType name="String" />
                     </attributeTypes>
                 </property>
+                <property key="attStartOfEvent" type="attribute" required="true" dataSource="entityEvent">
+                    <caption>开始时间</caption>
+                    <description></description>
+                    <attributeTypes>
+                        <attributeType name="DateTime" />
+                    </attributeTypes>
+                </property>
+                <property key="attEndOfEvent" type="attribute" required="true" dataSource="entityEvent">
+                    <caption>结束时间</caption>
+                    <description></description>
+                    <attributeTypes>
+                        <attributeType name="DateTime" />
+                    </attributeTypes>
+                </property>
             </propertyGroup>
         </propertyGroup>
         <propertyGroup caption="事件">

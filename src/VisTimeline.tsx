@@ -1,52 +1,70 @@
 import { VisTimelineContainerProps } from "../typings/VisTimelineProps";
-// import { ValueStatus } from "mendix";
-import { Timeline, DataSet } from 'vis-timeline/standalone';
-import { useRef } from "react";
+import { ValueStatus } from "mendix";
+import { Timeline, DataSet, TimelineOptions, DataItem } from 'vis-timeline/standalone';
+import { useEffect, useRef } from "react";
 import { useMount } from "ahooks";
-import moment from "moment";
 
 export default function (props: VisTimelineContainerProps) {
     console.log(props);
     const ref = useRef<any>();
+    const timeLineRef = useRef<Timeline>();
+
+    useEffect(() => {
+        if (props.entityGroup.status === ValueStatus.Available) {
+            const groups = props.entityGroup.items?.map(d => ({
+                id: props.attName.get(d).value,
+                content: props.attName.get(d).value,
+            }));
+
+            if (timeLineRef.current) {
+                timeLineRef.current.setGroups(new DataSet(groups));
+            }
+        }
+
+        return () => {
+        }
+    }, [props.entityGroup])
+
+    useEffect(() => {
+        if (props.entityEvent.status === ValueStatus.Available) {
+            const items: DataItem[] = props.entityEvent.items!.map(d => ({
+                id: d.id.toString(),
+                group: props.attGroup.get(d).value!,
+                content:
+                    props.attTitle.get(d).value!,
+                start: props.attStartOfEvent.get(d).value!,
+                end: props.attEndOfEvent.get(d).value!,
+                editable: true,
+            }));
+
+            if (timeLineRef.current) {
+                timeLineRef.current.setItems(new DataSet(items));
+            }
+        }
+
+        return () => {
+        }
+    }, [props.entityEvent])
 
     useMount(() => {
-        var now = moment().minutes(0).seconds(0).milliseconds(0);
-        var groupCount = 3;
-        var itemCount = 20;
-
-        // create a data set with groups
-        var names = ["John", "Alston", "Lee", "Grant"];
         var groups = new DataSet();
-        for (var g = 0; g < groupCount; g++) {
-            groups.add({ id: g, content: names[g] });
-        }
-
-        // create a dataset with items
         var items = new DataSet();
-        for (var i = 0; i < itemCount; i++) {
-            var start = now.clone().add(Math.random() * 200, "hours");
-            var group = Math.floor(Math.random() * groupCount);
-            items.add({
-                id: i,
-                group: group,
-                content:
-                    "item " +
-                    i +
-                    ' <span style="color:#97B0F8;">(' +
-                    names[group] +
-                    ")</span>",
-                start: start,
-                type: "box",
-            });
-        }
 
         // create visualization
 
-        var options = {
+        var options: TimelineOptions = {
             groupOrder: "content", // groupOrder can be a property name or a sorting function
+            // locale: 'zh-cn',
+            editable: {
+                add: true,
+                remove: true,
+                updateGroup: false,
+                updateTime: true,
+                overrideItems: true,
+            },
         };
 
-        new Timeline(ref.current, items, groups, options);
+        timeLineRef.current = new Timeline(ref.current, items, groups, options);
     });
 
     return (
