@@ -46,6 +46,18 @@ export default function (props: VisTimelineContainerProps) {
         }
     }, [props.entityEvent])
 
+    useEffect(
+        () => {
+            if (timeLineRef.current) {
+                timeLineRef.current.off('rangechanged');
+                timeLineRef.current.on('rangechanged', ({ start, end }) => {
+                    props.attStart?.setValue(start);
+                    props.attEnd?.setValue(end);
+                })
+            }
+        }, [props.attStart, props.attEnd, timeLineRef.current],
+    )
+
     useMount(() => {
         var groups = new DataSet();
         var items = new DataSet();
@@ -62,10 +74,26 @@ export default function (props: VisTimelineContainerProps) {
                 updateTime: true,
                 overrideItems: true,
             },
+            onUpdate(item, cb) {
+                console.log(item, 'onUpdate');
+                // cb(item);
+            }
         };
 
         timeLineRef.current = new Timeline(ref.current, items, groups, options);
+
+        timeLineRef.current.on('select', ({ items, event }) => {
+            console.log(items, event);
+        });
     });
+
+    useEffect(() => {
+        if (props.attStart && props.attEnd && props.attStart.status === ValueStatus.Available && props.attEnd.status === ValueStatus.Available) {
+            if (timeLineRef.current) {
+                timeLineRef.current.setWindow(props.attStart.value, props.attEnd.value);
+            }
+        }
+    }, [props.attStart, props.attEnd, timeLineRef.current])
 
     return (
         <div className={props.class} style={props.style} ref={ref}>
